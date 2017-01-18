@@ -1,0 +1,14 @@
+// ===== Main Styles ===========================================================================
+// Author: Taufik (taufik@xtremax.com)
+// 2016
+// Info: Main styling for ProjectX (desktop-first approach)
+// ===================================================================================================
+
+// import bootstrap variables, grid and mixins
+@import "fonts";
+@import "variable";
+@import "mixin";
+
+
+@import "default";
+@import "responsive";

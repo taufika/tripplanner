@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css?family=Arsenal:400,400i,700|Lato:300,400,400i,700");
+* {
+  outline: none !important;
+  color: black; }
+  *:focus {
+    outline: none !important; }
+
+a {
+  text-decoration: none;
+  cursor: pointer; }
+  a:hover, a:focus {
+    text-decoration: none; }
+
+body {
+  margin: 0px; }
+
+header nav {
+  box-shadow: 2px 1px 3px rgba(0, 0, 0, 0.3); }
+  header nav span.logo {
+    font-weight: bold;
+    font-size: 40px;
+    font-family: "Lato", sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none; }
+    header nav span.logo.first-part {
+      color: #FA6900;
+      margin-right: -4px; }
+    header nav span.logo.second-part {
+      color: #69D2E7; }
+  header nav .searchbar {
+    font-size: 20px;
+    padding: 5px 30px;
+    border-radius: 5px;
+    box-shadow: none;
+    background: white;
+    border: 1px solid #E0E4CC;
+    color: #a3af68;
+    width: 80%; }
+  header nav ul.menu {
+    list-style-type: none;
+    padding: 0px 20px;
+    margin: 0px; }
+    header nav ul.menu li {
+      display: inline-block;
+      padding: 20px;
+      vertical-align: middle;
+      width: 30%; }
+      header nav ul.menu li.search {
+        width: 40%;
+        text-align: center; }
