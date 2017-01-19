@@ -18,6 +18,7 @@ a {
 
 body{
     margin: 0px;
+	font-family: $lato;
 }
 
 header{
@@ -70,5 +71,35 @@ header{
 				}
 			}
 		}
+	}
+}
+
+main{
+	padding: 10px 7em;
+
+	h1{
+		color: #545454;
+		font-family: $arsenal;
+		font-size: 36px;
+	}
+
+	.no-query{
+		padding: 60px;
+		margin-top: 60px;
+		text-align: center;
+		font-size: 60px;
+		text-transform: uppercase;
+		font-weight: 600;
+		color: transparent;
+		background: #d4d4d4;
+		text-shadow: 0px 2px 3px $tertiarycolour;
+		-webkit-background-clip: text;
+		background-clip: text;
+		user-select: none;
+		pointer-events: none;
+	}
+
+	#themap{
+		height: 400px;
 	}
 }
