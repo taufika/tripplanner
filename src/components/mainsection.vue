@@ -6,8 +6,11 @@
     </div>
     <div class="list" v-if=" queryExists " >
         <h1>Attraction List</h1>
-        <ul> {{ listOfPlaces }}
-            <li v-for="place in places"> {{ place.name }} </li>
+        <ul v-bind:class="[ 'list-of-place', listClasses ]"> {{ listOfPlaces }}
+            <places v-for="place in places" v-bind:place-name=" place.name " v-bind:place-coord=" place.geometry.location "></places>
+            <div class="more" v-on:click="toggleListExpand">
+                <span>More</span>
+            </div>
         </ul>
     </div>
     <div id="themap"></div>
@@ -17,12 +20,15 @@
 
 <script>
 
+import places from './places'
+
 export default {
     name: 'mainSection',
     props: ["searchQuery"],
     data: function(){
         return {
-            places: "hehe"
+            places: [],
+            listClasses: ""
         }
     },
     computed: {
@@ -74,7 +80,7 @@ export default {
                                
                                 // places retrieved
                                 // get top 5 results
-                                results.length = 5;
+                                results.length = 2;
                                 for(var i=0; i< results.length; i++){
                                     final.places.push(results[i]);
                                 }
@@ -105,10 +111,27 @@ export default {
                     // do nothing
                 } else {
                     clearInterval(wait);
+                    // $.each(final.places, function(i, el){
+                    //     if( $.inArray(el, component.places) === -1 ) component.places.push(el)
+                    // });
                     component.places = final.places;
                 }
 
             },250);
+        }
+    },
+    components:{
+        places
+    },
+    methods: {
+        toggleListExpand: function(){
+
+            // check the classses
+            if(this.listClasses.indexOf("expanded") > -1){
+                this.listClasses = this.listClasses.replace(" expanded", "");
+            } else {
+                this.listClasses = this.listClasses.concat(" expanded");
+            }
         }
     }
 }

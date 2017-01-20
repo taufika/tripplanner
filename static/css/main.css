@@ -78,3 +78,68 @@ main {
     pointer-events: none; }
   main #themap {
     height: 400px; }
+  main .list-of-place {
+    list-style-type: none;
+    padding: 0px;
+    font-size: 0px;
+    margin-bottom: 40px;
+    text-align: center; }
+    main .list-of-place .more {
+      content: "More";
+      display: block;
+      background: #f5f5f5;
+      min-height: 10px;
+      font-size: 16px;
+      padding: 10px;
+      margin-top: 20px; }
+      main .list-of-place .more span {
+        color: #FA6900;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-weight: bold; }
+      main .list-of-place .more:hover span {
+        text-decoration: underline; }
+    main .list-of-place.expanded .more span {
+      display: none; }
+    main .list-of-place.expanded .more::before {
+      content: "LESS";
+      color: #FA6900;
+      font-weight: bold;
+      cursor: pointer; }
+    main .list-of-place.expanded .more:hover::before {
+      text-decoration: underline; }
+    main .list-of-place.expanded li:nth-of-type(n+9) {
+      display: inline-block; }
+    main .list-of-place li {
+      width: calc(20% - 20px);
+      height: 150px;
+      margin: 10px;
+      padding: 15px;
+      font-size: 16px;
+      display: inline-block;
+      vertical-align: top;
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      cursor: pointer;
+      position: relative;
+      box-sizing: content-box; }
+      main .list-of-place li:hover h1.title {
+        max-height: 150px; }
+      main .list-of-place li h1.title {
+        font-size: 18px;
+        text-transform: uppercase;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        margin: 0px;
+        padding: 10px;
+        overflow: hidden;
+        line-height: 20px;
+        max-height: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        display: block;
+        width: calc(100% - 20px);
+        transition: all 0.5s ease-in-out; }
+      main .list-of-place li:nth-of-type(n+9) {
+        display: none; }
