@@ -1,7 +1,7 @@
 <template>
 
 <li id="places">
-    <img class="backImage" v-bind:src=" imageSource ">
+    <img v-bind:class="[ 'backImage', imageClass ]" v-bind:src=" imageSource ">
     <h1 class="title"> {{ placeName }} </h1>
 </li>
 
@@ -11,38 +11,27 @@
 
 export default {
     name: "places",
-    props: ["placeName", "placeCoord"],
+    props: ["placeName", "placeCoord", "placePhoto"],
     computed: {
         imageSource: function(){
-
-            var component = this;
-
-            // call the instagram API
-            instagramAPI("https://api.instagram.com/v1/locations/search?lat=48.858844&lng=2.294351&access_token=ACCESS-TOKEN",
-            {
-                lat: this.lat,
-                lng: this.lng,
-                distance: 100,
-            },
-            function(data){
-                data.data.length = 1;
-                var placeId = data.data[0].id;
-                console.log(component.placeName + ": " + placeId);
-
-                // get the picture
-                // instagramAPI("https://api.instagram.com/v1/locations/" + placeId + "/media/recent?access_token=ACCESS-TOKEN",
-                // {},
-                // function(data){
-
-                //     console.log(data);
-                // });
-            });
+            return this.placePhoto;
         },
         lat: function(){
             return this.placeCoord.lat();
         },
         lng: function(){
             return this.placeCoord.lng();
+        },
+        imageClass: function(){
+
+            var width = $(' .backImage ').width();
+            var parWidth = $(' .backImage ').parent().width();
+
+            if(width <= parWidth){
+                return " portrait";
+            } else {
+                return "";
+            }
         }
     }
 }

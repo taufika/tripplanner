@@ -114,7 +114,6 @@ main {
       width: calc(20% - 20px);
       height: 150px;
       margin: 10px;
-      padding: 15px;
       font-size: 16px;
       display: inline-block;
       vertical-align: top;
@@ -122,7 +121,8 @@ main {
       text-align: left;
       cursor: pointer;
       position: relative;
-      box-sizing: content-box; }
+      box-sizing: content-box;
+      overflow: hidden; }
       main .list-of-place li:hover h1.title {
         max-height: 150px; }
       main .list-of-place li h1.title {
@@ -136,10 +136,15 @@ main {
         overflow: hidden;
         line-height: 20px;
         max-height: 20px;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.8);
         color: white;
         display: block;
         width: calc(100% - 20px);
         transition: all 0.5s ease-in-out; }
+      main .list-of-place li img.backImage {
+        height: 100%; }
+        main .list-of-place li img.backImage.portrait {
+          width: 100%;
+          height: auto; }
       main .list-of-place li:nth-of-type(n+9) {
         display: none; }

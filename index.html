@@ -20,12 +20,19 @@
         if( url.indexOf("access_token") > -1 ){
           window.instagramToken = url.substr( url.indexOf("access_token=") + 13);
         } else {
-          window.location.href = "https://api.instagram.com/oauth/authorize/?client_id=f439707df0004ba28e76d1ed9cd5ca2f&redirect_uri=http://localhost:8080/&response_type=token";
+          var redirect_uri;
+          if( url.charAt(url.length -1) == "/"){
+            redirect_uri = url;
+          } else {
+            redirect_uri = url.concat("/");
+          }
+          window.location.href = "https://api.instagram.com/oauth/authorize/?client_id=f439707df0004ba28e76d1ed9cd5ca2f&redirect_uri=" + redirect_uri + "&response_type=token";
         }
 
         var instagramAPI = function(endpoint, data, success){
 
           data.access_token = window.instagramToken;
+          // console.log(data.access_token);
 
           $.ajax({
             url: endpoint,
@@ -33,6 +40,7 @@
             dataType: "jsonp",
             data: data,
             success: function(data){
+              // console.log(data);
               success(data);
             }
           });

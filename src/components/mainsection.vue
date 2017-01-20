@@ -7,7 +7,7 @@
     <div class="list" v-if=" queryExists " >
         <h1>Attraction List</h1>
         <ul v-bind:class="[ 'list-of-place', listClasses ]"> {{ listOfPlaces }}
-            <places v-for="place in places" v-bind:place-name=" place.name " v-bind:place-coord=" place.geometry.location "></places>
+            <places v-for="place in places" v-bind:place-name=" place.name " v-bind:place-coord=" place.geometry.location " v-bind:place-photo=" place.photos[0].getUrl({maxWidth: 800, maxHeight: 800}) "></places>
             <div class="more" v-on:click="toggleListExpand">
                 <span>More</span>
             </div>
@@ -80,8 +80,12 @@ export default {
                                
                                 // places retrieved
                                 // get top 5 results
-                                results.length = 2;
+                                results.length = 3;
                                 for(var i=0; i< results.length; i++){
+                                    // console.log(results[i].photos[0].getUrl({maxWidth: 800, maxHeight: 800}));
+                                    if( !results[i].photos ){
+                                        results[i].photos = [ { getUrl: function(){ return ""; } } ]
+                                    }
                                     final.places.push(results[i]);
                                 }
                                 final.counter++;
