@@ -175,6 +175,7 @@ main{
 			position: relative;
 			box-sizing: content-box;
 			overflow: hidden;
+			background: #A6EBC7;
 
 			&:hover{
 
@@ -202,17 +203,76 @@ main{
 			}
 
 			img.backImage{
-				height: 100%;
+				width: 100%;
+				border: none !important;
 				
 				&.portrait{
-					width: 100%;
-					height: auto;
+					height: 100%;
+					width: auto;
 				}
 			}
 
 			&:nth-of-type(n+9){
 				display: none;
 			}
+
+			// cicadas random
+			&:nth-of-type(n+2){
+				background: #C8B8A8;
+			}
+
+			&:nth-of-type(2n+3){
+				background: #FDF6E5;
+			}
+
+			&:nth-of-type(3n+5){
+				background: #F0A2B2;
+			}
+
+			&:nth-of-type(5n+7){
+				background: #9ABBEB;
+			}
+
+			&:nth-of-type(7n+11){
+				background: #5BAE81;
+			}
+		}
+	}
+
+	.content{
+		display: inline-block;
+		width: 100%;
+		vertical-align: top;
+
+		&.accommodate{
+			width: calc(70% - 20px);
+		}
+	}
+
+	.accommodation{
+		display: inline-block;
+		width: 30%;
+		max-width: 0px;
+		margin-left: 10px;
+		vertical-align: top;
+		padding: 20px;
+		transition: all 0.5s ease-out;
+		overflow: hidden;
+		opacity: 0;
+		height: 0px;
+
+		&.accommodate{
+			max-width: calc(30% - 40px);
+			opacity: 1;
+			border-left: 2px solid rgba(0,0,0,0.05);
+			min-height: 100vh;
+		}
+
+		.title{
+			text-transform: uppercase;
+			padding: 20px;
+			background: $accentcolour;
+			color: white;
 		}
 	}
 }

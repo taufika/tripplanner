@@ -27,7 +27,7 @@ export default {
             var width = $(' .backImage ').width();
             var parWidth = $(' .backImage ').parent().width();
 
-            if(width <= parWidth){
+            if(width > parWidth){
                 return " portrait";
             } else {
                 return "";

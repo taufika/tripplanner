@@ -122,7 +122,8 @@ main {
       cursor: pointer;
       position: relative;
       box-sizing: content-box;
-      overflow: hidden; }
+      overflow: hidden;
+      background: #A6EBC7; }
       main .list-of-place li:hover h1.title {
         max-height: 150px; }
       main .list-of-place li h1.title {
@@ -142,9 +143,47 @@ main {
         width: calc(100% - 20px);
         transition: all 0.5s ease-in-out; }
       main .list-of-place li img.backImage {
-        height: 100%; }
+        width: 100%;
+        border: none !important; }
         main .list-of-place li img.backImage.portrait {
-          width: 100%;
-          height: auto; }
+          height: 100%;
+          width: auto; }
       main .list-of-place li:nth-of-type(n+9) {
         display: none; }
+      main .list-of-place li:nth-of-type(n+2) {
+        background: #C8B8A8; }
+      main .list-of-place li:nth-of-type(2n+3) {
+        background: #FDF6E5; }
+      main .list-of-place li:nth-of-type(3n+5) {
+        background: #F0A2B2; }
+      main .list-of-place li:nth-of-type(5n+7) {
+        background: #9ABBEB; }
+      main .list-of-place li:nth-of-type(7n+11) {
+        background: #5BAE81; }
+  main .content {
+    display: inline-block;
+    width: 100%;
+    vertical-align: top; }
+    main .content.accommodate {
+      width: calc(70% - 20px); }
+  main .accommodation {
+    display: inline-block;
+    width: 30%;
+    max-width: 0px;
+    margin-left: 10px;
+    vertical-align: top;
+    padding: 20px;
+    transition: all 0.5s ease-out;
+    overflow: hidden;
+    opacity: 0;
+    height: 0px; }
+    main .accommodation.accommodate {
+      max-width: calc(30% - 40px);
+      opacity: 1;
+      border-left: 2px solid rgba(0, 0, 0, 0.05);
+      min-height: 100vh; }
+    main .accommodation .title {
+      text-transform: uppercase;
+      padding: 20px;
+      background: #69D2E7;
+      color: white; }

@@ -1,19 +1,27 @@
 <template>
 
 <div id="mainSection">
-    <div class="no-query" v-if=" !queryExists ">
-        No query found. Please type your query on the box above.
-    </div>
-    <div class="list" v-if=" queryExists " >
-        <h1>Attraction List</h1>
-        <ul v-bind:class="[ 'list-of-place', listClasses ]"> {{ listOfPlaces }}
-            <places v-for="place in places" v-bind:place-name=" place.name " v-bind:place-coord=" place.geometry.location " v-bind:place-photo=" place.photos[0].getUrl({maxWidth: 800, maxHeight: 800}) "></places>
-            <div class="more" v-on:click="toggleListExpand">
-                <span>More</span>
-            </div>
-        </ul>
-    </div>
-    <div id="themap"></div>
+    <section v-bind:class="['content', contentClass]">
+        <h1> Showing search results for {{ searchQuery }} </h1>
+        <div class="no-query" v-if=" !queryExists ">
+            No query found. Please type your query on the box above.
+        </div>
+        <div class="list" v-if=" queryExists " >
+            <h1>Attraction List</h1>
+            <ul v-bind:class="[ 'list-of-place', listClasses ]"> {{ listOfPlaces }}
+                <places v-for="place in places" v-bind:place-name=" place.name " v-bind:place-coord=" place.geometry.location " v-bind:place-photo=" place.photos[0].getUrl({maxWidth: 800, maxHeight: 800}) "></places>
+                <div class="more" v-on:click="toggleListExpand">
+                    <span>More</span>
+                </div>
+            </ul>
+        </div>
+        <h1>Local Map</h1>
+        <div id="themap"></div>
+    </section>
+    <aside v-bind:class="['accommodation', contentClass]">
+        <h1 class="title">travel</h1>
+        <h2>From <span id="from">{{ currentLocation }}</span> to <span id="to">{{ searchQuery }}</span></h2>
+    </aside>
 </div>
 
 </template>
@@ -45,6 +53,7 @@ export default {
 
             // url encode the query
             var address = encodeURI(this.searchQuery);
+            var searchCategory = ["amusement_park","bar","campground","museum","art_gallery","cafe"];
             var final = {
                 places: [],
                 counter: 0
@@ -96,12 +105,9 @@ export default {
                         service.nearbySearch(theRequest, callback);
                     }
 
-                    request("amusement_park");
-                    request("bar");
-                    request("campground");
-                    request("museum");
-                    request("art_gallery");
-                    request("cafe");
+                    for(var i=0; i<searchCategory.length; i++){
+                        request(searchCategory[i]);
+                    }
                 }
 
             });
@@ -111,17 +117,49 @@ export default {
             // wait for the counter
             var wait = setInterval(function(){
 
-                if(final.counter < 6){
+                if(final.counter < searchCategory.length){
                     // do nothing
                 } else {
                     clearInterval(wait);
                     // $.each(final.places, function(i, el){
                     //     if( $.inArray(el, component.places) === -1 ) component.places.push(el)
                     // });
+                    // final.places.length = 1;
                     component.places = final.places;
                 }
 
             },250);
+        },
+        contentClass: function(){
+            if(this.queryExists)
+                return " accommodate";
+            else
+                return "";
+        },
+        currentLocation: function(){
+            // reverse geocode
+            var reverseGeoCode = function(coord){
+                // console.log(coord.coords);
+                var lat = coord.coords.latitude;
+                var lng = coord.coords.longitude;
+
+                var geocoder = new google.maps.Geocoder;
+                geocoder.geocode({'location': { lat: lat, lng: lng } }, function(results, status){
+                    if(status == "OK"){
+
+                        // get the city
+                        var city = results[0].address_components[4].long_name;
+                        $(" #from ").text(city);
+                    }
+                })
+            }
+
+            // check if geoloc is available
+            if(navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(reverseGeoCode);
+            } else {
+                return "Location unavailable";
+            }
         }
     },
     components:{
