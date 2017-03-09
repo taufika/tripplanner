@@ -164,6 +164,13 @@ export default {
 
             var component = this;
 
+            // if doesn't support geoloc
+            $.get("http://ipinfo.io", function(response) { 
+                var city = response.city;
+                $(" #from ").text(city);
+                component.currentCity = city;
+            }, "jsonp");
+
             // reverse geocode
             var reverseGeoCode = function(coord){
                 // console.log(coord.coords);
@@ -196,7 +203,6 @@ export default {
             var returned = {};
             var component = this;
 
-            
             // reset the data
             component.flightList = [];
 
@@ -216,6 +222,7 @@ export default {
                     if( currentCity != ""){
 
                         currentCity = currentCity.replace(" ","_");
+                        // console.log(currentCity);
 
                         $.getJSON("http://proxify-domain.herokuapp.com/?url=http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/ID/IDR/en-GB?query=" + currentCity + "&apiKey=ta933553259418853080179651591568",function(data){
 
