@@ -9,7 +9,7 @@
         <div class="list" v-if=" queryExists " >
             <h1>Attraction List</h1>
             <ul v-bind:class="[ 'list-of-place', listClasses ]"> {{ listOfPlaces }}
-                <places v-for="place in places" v-bind:place-name=" place.name " v-bind:place-coord=" place.geometry.location " v-bind:place-photo=" place.photos[0].getUrl({maxWidth: 800, maxHeight: 800}) "></places>
+                <places v-for="(place,index) in places" v-bind:place-name=" place.name " v-bind:place-coord=" place.geometry.location " v-bind:place-photo=" place.photos[0].getUrl({maxWidth: 800, maxHeight: 800}) " v-bind:img-id=" 'img' + index "></places>
                 <div class="more" v-on:click="toggleListExpand">
                     <span>More</span>
                 </div>

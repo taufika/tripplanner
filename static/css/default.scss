@@ -203,12 +203,12 @@ main{
 			}
 
 			img.backImage{
-				width: 100%;
+				height: 100%;
 				border: none !important;
 				
 				&.portrait{
-					height: 100%;
-					width: auto;
+					width: 100%;
+					height: auto;
 				}
 			}
 
@@ -273,6 +273,10 @@ main{
 			padding: 20px;
 			background: $accentcolour;
 			color: white;
+		}
+
+		#to{
+			text-transform: capitalize;
 		}
 
 		.flights{

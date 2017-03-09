@@ -1,7 +1,7 @@
 <template>
 
 <li id="places">
-    <img v-bind:class="[ 'backImage', imageClass ]" v-bind:src=" imageSource ">
+    <img v-bind:class="[ 'backImage', imageClassGen, imageClass ]" v-bind:src=" imageSource " ref="img" v-bind:id=" imgId ">
     <h1 class="title"> {{ placeName }} </h1>
 </li>
 
@@ -11,7 +11,12 @@
 
 export default {
     name: "places",
-    props: ["placeName", "placeCoord", "placePhoto"],
+    props: ["placeName", "placeCoord", "placePhoto", "imgId"],
+    data: function(){
+        return {
+            imageClass: ""
+        };
+    },
     computed: {
         imageSource: function(){
             return this.placePhoto;
@@ -22,16 +27,22 @@ export default {
         lng: function(){
             return this.placeCoord.lng();
         },
-        imageClass: function(){
+        imageClassGen: function(){
 
-            var width = $(' .backImage ').width();
-            var parWidth = $(' .backImage ').parent().width();
+            var component = this;
 
-            if(width > parWidth){
-                return " portrait";
-            } else {
-                return "";
-            }
+            var img = new Image();
+            img.onload = function(){
+                // console.log( this.width+' '+ this.height );
+
+                var width = this.width * (150 / this.height);
+                var parentWidth = $(" .list-of-place li ").width();
+
+                if( width < parentWidth){
+                    component.imageClass = "portrait";
+                }
+            };
+            img.src = this.imageSource;
         }
     }
 }
