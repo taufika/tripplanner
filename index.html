@@ -10,24 +10,24 @@
     <!-- built files will be auto injected -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDfd_nt0wAORu3DOTD6kA_K42NnCVVB10&libraries=places&v=3"></script>  
     <script src="static/js/jquery.min.js"></script>
-
+    <script src="static/js/jquery.nicescroll.js"></script>
     
     <script type="text/javascript">
 
         // get the access token
         var url = window.location.href;
 
-        if( url.indexOf("access_token") > -1 ){
-          window.instagramToken = url.substr( url.indexOf("access_token=") + 13);
-        } else {
-          var redirect_uri;
-          if( url.charAt(url.length -1) == "/"){
-            redirect_uri = url;
-          } else {
-            redirect_uri = url.concat("/");
-          }
-          window.location.href = "https://api.instagram.com/oauth/authorize/?client_id=f439707df0004ba28e76d1ed9cd5ca2f&redirect_uri=" + redirect_uri + "&response_type=token";
-        }
+        // if( url.indexOf("access_token") > -1 ){
+        //   window.instagramToken = url.substr( url.indexOf("access_token=") + 13);
+        // } else {
+        //   var redirect_uri;
+        //   if( url.charAt(url.length -1) == "/"){
+        //     redirect_uri = url;
+        //   } else {
+        //     redirect_uri = url.concat("/");
+        //   }
+        //   window.location.href = "https://api.instagram.com/oauth/authorize/?client_id=f439707df0004ba28e76d1ed9cd5ca2f&redirect_uri=" + redirect_uri + "&response_type=token";
+        // }
 
         var instagramAPI = function(endpoint, data, success){
 

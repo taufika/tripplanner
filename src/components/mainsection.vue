@@ -21,6 +21,28 @@
     <aside v-bind:class="['accommodation', contentClass]">
         <h1 class="title">travel</h1>
         <h2>From <span id="from">{{ currentLocation }}</span> to <span id="to">{{ searchQuery }}</span></h2>
+        <div id="flights" v-bind:class=" flights " >
+            <div v-for="flight in flightList" class="flights">
+                <div class="flights-direct">
+                    <h5 v-if="flight.Direct" class="direct">Direct</h5>
+                </div>
+                <div class="flights-dates">
+                    <div class="date">
+                        <h4>Departure: {{ flight.OutboundLeg.DepartureDate.substr(0,10) }}</h4>
+                        <h5>Airline: {{ flight.Airlines[0] }}</h5>
+                    </div>
+                    <div class="date">
+                        <h4>Return: {{ flight.InboundLeg.DepartureDate.substr(0,10) }}</h4>
+                        <h5>Airline: {{ flight.Airlines[1] }}</h5>
+                    </div>
+                </div>
+                <div class="flights-price">
+                    <a v-bind:href=" flight.Link " target="_blank">
+                        <h1>IDR {{ flight.MinPrice.toLocaleString() }}</h1>
+                    </a>
+                </div>
+            </div>
+        </div>
     </aside>
 </div>
 
@@ -36,7 +58,9 @@ export default {
     data: function(){
         return {
             places: [],
-            listClasses: ""
+            listClasses: "",
+            currentCity: "",
+            flightList: [],
         }
     },
     computed: {
@@ -137,11 +161,16 @@ export default {
                 return "";
         },
         currentLocation: function(){
+
+            var component = this;
+
             // reverse geocode
             var reverseGeoCode = function(coord){
                 // console.log(coord.coords);
                 var lat = coord.coords.latitude;
                 var lng = coord.coords.longitude;
+
+                // console.log(coord);
 
                 var geocoder = new google.maps.Geocoder;
                 geocoder.geocode({'location': { lat: lat, lng: lng } }, function(results, status){
@@ -150,6 +179,7 @@ export default {
                         // get the city
                         var city = results[0].address_components[4].long_name;
                         $(" #from ").text(city);
+                        component.currentCity = city;
                     }
                 })
             }
@@ -160,6 +190,74 @@ export default {
             } else {
                 return "Location unavailable";
             }
+        },
+        flights: function(){
+            // returned var
+            var returned = {};
+            var component = this;
+
+            
+            // reset the data
+            component.flightList = [];
+
+            // query for the places
+            // get the destination location
+
+            var currentCity = component.currentCity;
+            var query = component.searchQuery.replace(" ","_");
+
+            $.getJSON("http://proxify-domain.herokuapp.com/?url=http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/ID/IDR/en-GB?query=" + query + "&apiKey=ta933553259418853080179651591568",function(data){
+
+                // if destination exists
+                if( data.Places.length){
+                    var destID = data.Places[0].PlaceId;
+                    // console.log(destID);
+
+                    if( currentCity != ""){
+
+                        currentCity = currentCity.replace(" ","_");
+
+                        $.getJSON("http://proxify-domain.herokuapp.com/?url=http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/ID/IDR/en-GB?query=" + currentCity + "&apiKey=ta933553259418853080179651591568",function(data){
+
+                            var currentID = data.Places[0].PlaceId;
+                            // console.log(currentID);
+
+                            // get flight list
+                            $.getJSON("http://proxify-domain.herokuapp.com/?url=partners.api.skyscanner.net/apiservices/browsequotes/v1.0/ID/IDR/en-GB/" + currentID + "/" + destID + "/anytime/anytime?apiKey=ta933553259418853080179651591568",function(data){
+
+                                // console.log(data);
+                                var airlines = data.Carriers;
+                                var flights = data.Quotes;
+
+                                var airlineName = function(ID){
+                                    for(var i=0; i<airlines.length; i++){
+                                        if( airlines[i].CarrierId == ID){
+                                            return airlines[i].Name;
+                                        }
+                                    }
+                                }
+
+                                // console.log( airlineName(0));
+
+                                for(var i = 0; i < flights.length; i++){
+                                    var airline1 = airlineName( flights[i].InboundLeg.CarrierIds[0] );
+                                    var airline2 = airlineName( flights[i].OutboundLeg.CarrierIds[0] );
+                                    var airline = [airline2, airline1];
+
+                                    flights[i].Airlines = airline;
+                                    flights[i].Link = function(dep,ret){
+                                        
+                                        return "http://partners.api.skyscanner.net/apiservices/referral/v1.0/ID/IDR/en-GB/" + currentID + "/" + destID + "/" + dep + "/" + ret + "?apiKey=ta93355325941885";
+                                    }(flights[i].OutboundLeg.DepartureDate.substr(0,10), flights[i].InboundLeg.DepartureDate.substr(0,10),);
+                                }
+
+                                // console.log(flights);
+                                component.flightList = flights;
+                            });
+                        });
+                    }
+                }
+            });
         }
     },
     components:{

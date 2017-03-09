@@ -257,7 +257,7 @@ main{
 		vertical-align: top;
 		padding: 20px;
 		transition: all 0.5s ease-out;
-		overflow: hidden;
+		overflow-x: hidden;
 		opacity: 0;
 		height: 0px;
 
@@ -265,7 +265,7 @@ main{
 			max-width: calc(30% - 40px);
 			opacity: 1;
 			border-left: 2px solid rgba(0,0,0,0.05);
-			min-height: 100vh;
+			height: calc(100vh - 155px);
 		}
 
 		.title{
@@ -273,6 +273,45 @@ main{
 			padding: 20px;
 			background: $accentcolour;
 			color: white;
+		}
+
+		.flights{
+			border-bottom: 1px solid #F5F5F5;
+
+			.flights-dates{
+
+				.date{
+					display: inline-block;
+					width: 50%;
+					margin-right: -5px;
+					vertical-align: top;
+
+					h4,h5{
+						margin: 0px;
+					}
+				}
+			}
+
+			.flights-price{
+
+				h1{
+					color: white;
+					background: $maincolour;
+					text-align: center;
+					padding: 5px;
+					margin: 10px 0px;
+
+					&:hover{
+						background: darken($maincolour,20);
+						text-decoration: underline;
+					}
+				}
+			}
+
+			.direct{
+				color: darken(#69D2E7,20);
+				margin: 10px 0px;
+			}
 		}
 	}
 }

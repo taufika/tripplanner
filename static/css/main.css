@@ -174,16 +174,37 @@ main {
     vertical-align: top;
     padding: 20px;
     transition: all 0.5s ease-out;
-    overflow: hidden;
+    overflow-x: hidden;
     opacity: 0;
     height: 0px; }
     main .accommodation.accommodate {
       max-width: calc(30% - 40px);
       opacity: 1;
       border-left: 2px solid rgba(0, 0, 0, 0.05);
-      min-height: 100vh; }
+      height: calc(100vh - 155px); }
     main .accommodation .title {
       text-transform: uppercase;
       padding: 20px;
       background: #69D2E7;
       color: white; }
+    main .accommodation .flights {
+      border-bottom: 1px solid #F5F5F5; }
+      main .accommodation .flights .flights-dates .date {
+        display: inline-block;
+        width: 50%;
+        margin-right: -5px;
+        vertical-align: top; }
+        main .accommodation .flights .flights-dates .date h4, main .accommodation .flights .flights-dates .date h5 {
+          margin: 0px; }
+      main .accommodation .flights .flights-price h1 {
+        color: white;
+        background: #FA6900;
+        text-align: center;
+        padding: 5px;
+        margin: 10px 0px; }
+        main .accommodation .flights .flights-price h1:hover {
+          background: #943e00;
+          text-decoration: underline; }
+      main .accommodation .flights .direct {
+        color: #20adca;
+        margin: 10px 0px; }
