@@ -165,7 +165,7 @@ export default {
             var component = this;
 
             // if doesn't support geoloc
-            $.get("http://ipinfo.io", function(response) { 
+            $.get("https://ipinfo.io", function(response) { 
                 var city = response.city;
                 $(" #from ").text(city);
                 component.currentCity = city;
@@ -212,7 +212,7 @@ export default {
             var currentCity = component.currentCity;
             var query = component.searchQuery.replace(" ","_");
 
-            $.getJSON("http://proxify-domain.herokuapp.com/?url=http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/ID/IDR/en-GB?query=" + query + "&apiKey=ta933553259418853080179651591568",function(data){
+            $.getJSON("https://proxify-domain.herokuapp.com/?url=http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/ID/IDR/en-GB?query=" + query + "&apiKey=ta933553259418853080179651591568",function(data){
 
                 // if destination exists
                 if( data.Places.length){
@@ -224,13 +224,13 @@ export default {
                         currentCity = currentCity.replace(" ","_");
                         // console.log(currentCity);
 
-                        $.getJSON("http://proxify-domain.herokuapp.com/?url=http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/ID/IDR/en-GB?query=" + currentCity + "&apiKey=ta933553259418853080179651591568",function(data){
+                        $.getJSON("https://proxify-domain.herokuapp.com/?url=http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/ID/IDR/en-GB?query=" + currentCity + "&apiKey=ta933553259418853080179651591568",function(data){
 
                             var currentID = data.Places[0].PlaceId;
                             // console.log(currentID);
 
                             // get flight list
-                            $.getJSON("http://proxify-domain.herokuapp.com/?url=partners.api.skyscanner.net/apiservices/browsequotes/v1.0/ID/IDR/en-GB/" + currentID + "/" + destID + "/anytime/anytime?apiKey=ta933553259418853080179651591568",function(data){
+                            $.getJSON("https://proxify-domain.herokuapp.com/?url=partners.api.skyscanner.net/apiservices/browsequotes/v1.0/ID/IDR/en-GB/" + currentID + "/" + destID + "/anytime/anytime?apiKey=ta933553259418853080179651591568",function(data){
 
                                 // console.log(data);
                                 var airlines = data.Carriers;
@@ -254,7 +254,7 @@ export default {
                                     flights[i].Airlines = airline;
                                     flights[i].Link = function(dep,ret){
                                         
-                                        return "http://partners.api.skyscanner.net/apiservices/referral/v1.0/ID/IDR/en-GB/" + currentID + "/" + destID + "/" + dep + "/" + ret + "?apiKey=ta93355325941885";
+                                        return "https://partners.api.skyscanner.net/apiservices/referral/v1.0/ID/IDR/en-GB/" + currentID + "/" + destID + "/" + dep + "/" + ret + "?apiKey=ta93355325941885";
                                     }(flights[i].OutboundLeg.DepartureDate.substr(0,10), flights[i].InboundLeg.DepartureDate.substr(0,10),);
                                 }
 
